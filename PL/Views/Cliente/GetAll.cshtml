@@ -1,0 +1,67 @@
+﻿@model ML.Cliente
+
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Clientes</h2>
+            <p>Agrega, modifica o elimina un cliente.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 col-md-offset-10 text-right">
+            @Html.ActionLink("+ Agregar cliente", "Form", "Cliente", new { @class = "btn btn-primary" })            
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Editar</th>
+                        <th class="hidden">Id</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Domicilio</th>                        
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.Cliente cliente in Model.Clientes)
+                    {
+                        <tr>
+                            <td class="text-center">                                
+                                <a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form","Cliente", new { idCliente = cliente.IdCliente })"></a>
+                            </td>
+                            <td class="hidden">@cliente.IdCliente</td>
+                            <td class="text-center">@cliente.Nombre @cliente.ApellidoPaterno @cliente.ApellidoMaterno</td>
+                            <td class="text-center">@cliente.Domicilio</td>                            
+                            <td class="text-center">@cliente.Email</td>                            
+                            <td class="text-center">
+                                <a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Cliente", new { idCliente = cliente.IdCliente})"></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+

@@ -1,0 +1,68 @@
+﻿@model ML.Factura
+
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Facturas</h2>
+            <p>Selecciona una factura para ver sus detalles o agrega una nueva</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 col-md-offset-10 text-right">
+            @Html.ActionLink("+ Nueva factura", "NuevaFactura", "Factura", new { @class = "btn btn-primary" })
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-hover ">
+                <thead>
+                    <tr>
+                        <th class="text-center">Ver detalle</th>
+                        <th class="text-center">Id Factura</th>
+                        <th class="text-center">Factura #</th>
+                        <th class="text-center">Fecha</th>
+                        <th class="text-center">Cliente</th>
+                        <th class="text-center">Id detalle</th>
+                        <th class="text-center">Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.Factura factura in Model.Facturas)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <a class="btn btn-info glyphicon glyphicon-eye-open" href="@Url.Action("DetalleFactura","DetalleFactura", new {idFactura = factura.IdFactura})"></a>
+                            </td>
+                            <td class="text-center">@factura.IdFactura</td>
+                            <td class="text-center">@factura.NumeroFactura</td>
+                            <td class="text-center">@factura.FechaHora</td>
+                            <td class="text-center">@factura.Cliente.NombreCompleto</td>
+                            <td class="text-center">@factura.IdDetalle</td>
+                            <td class="text-center">
+                                <a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Factura", new { idFactura = factura.IdFactura})"></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+

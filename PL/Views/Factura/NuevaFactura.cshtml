@@ -1,0 +1,108 @@
+﻿@model ML.DetalleFactura
+
+@{
+    ViewBag.Title = "NuevaFactura";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Nueva Factura</h2>
+            <p>Agrega una nueva factura, agrega la fecha, selecciona el cliente y agregale productos</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+
+    @using (Html.BeginForm("Add", "Factura", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Factura.NumeroFactura)
+                    @Html.TextBoxFor(model => model.Factura.NumeroFactura, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        @*<div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Factura.FechaHora)
+                    @Html.TextBoxFor(model => model.Factura.FechaHora, new { type = "datetime", @class = "form-control" })
+                </div>
+            </div>
+        </div>*@
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Factura.Cliente)
+                    @Html.DropDownListFor(model => model.Factura.Cliente.IdCliente, new SelectList(Model.Factura.Cliente.Clientes, "IdCliente", "NombreCompleto"), "Selecciona una opción", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+
+        <br />
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <p>Selecciona los productos para agregarlos a la factura</p>
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-condensed table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Seleccionar</th>
+                            <th class="text-center">Producto</th>
+                            <th class="text-center">Marca</th>
+                            <th class="text-center">Costo</th>
+                            <th class="text-center">Precio de venta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Producto producto in Model.Producto.Productos)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" name="Productos" value="@producto.IdProducto" />
+                                </td>
+                                <td class="text-center">@producto.Nombre</td>
+                                <td class="text-center">@producto.Marca</td>
+                                <td class="text-center">$ @producto.Costo</td>
+                                <td class="text-center">$ @producto.PrecioVenta</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+                    @Html.ActionLink("Regresar", "GetAll", "Factura", htmlAttributes: new { @class = "btn btn-danger" })
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+
+</div>
+

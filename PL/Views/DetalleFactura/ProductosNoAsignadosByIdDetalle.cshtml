@@ -1,0 +1,97 @@
+﻿@model ML.DetalleFactura
+
+@{
+    ViewBag.Title = "ProductosNoAsignadosByIdDetalle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .lblData {
+        font-weight: 500;
+    }
+</style>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Productos disponibles</h2>
+        </div>
+    </div>
+    <br />
+
+    @using (Html.BeginForm("ProductosFacturaAdd", "DetalleFactura", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <div class="form-inline">
+
+                        
+                        @Html.TextBoxFor(model => model.Factura.IdFactura, new { @class = "hidden" })
+                        <p><strong>Factura No. </strong> @Model.Factura.NumeroFactura</p>
+                        <p><strong>Fecha: </strong> @Model.Factura.FechaHora</p>
+                        <p><strong>Cliente: </strong> @Model.Factura.Cliente.NombreCompleto</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <hr />
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-hover ">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Seleccionar</th>
+                            <th class="hidden">Id</th>
+                            <th>Nombre</th>
+                            <th>Marca</th>
+                            <th>Costo</th>
+                            <th>Precio de venta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        @foreach (ML.DetalleFactura detalleProducto in Model.Producto.Productos)
+                        {
+                            <tr>
+                                <td class="text-center">
+
+                                    <input type="checkbox" name="Productos" value="@detalleProducto.Producto.IdProducto" />
+                                </td>
+                                <td class="hidden">@detalleProducto.Producto.IdProducto</td>
+                                <td class="text-center">@detalleProducto.Producto.Nombre</td>
+                                <td class="text-center">@detalleProducto.Producto.Marca</td>
+                                <td class="text-center">@detalleProducto.Producto.Costo</td>
+                                <td class="text-center">@detalleProducto.Producto.PrecioVenta</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row text-center">
+            <div class="col-md-12">
+                @Html.ActionLink("Regresar", "DetalleFactura", "DetalleFactura", new { idFactura = Model.Factura.IdFactura}, htmlAttributes: new { @class = "btn btn-danger" })
+                <input type="submit" value="Guardar" class="btn btn-success" />
+            </div>
+        </div>
+    }
+
+
+</div>
+

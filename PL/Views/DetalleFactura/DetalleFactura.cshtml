@@ -1,0 +1,95 @@
+﻿@model ML.DetalleFactura
+
+@{
+    ViewBag.Title = "DetalleFactura";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<style>
+    .lblData {
+        font-weight: 500;
+    }
+</style>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Detalle de factura</h2>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-12">
+                <div class="form-inline">
+
+                    <p><strong>Factura No. </strong> @Model.Factura.NumeroFactura</p>
+                    <p><strong>Fecha: </strong> @Model.Factura.FechaHora</p>
+                    <p><strong>Cliente: </strong> @Model.Factura.Cliente.NombreCompleto</p>
+                 
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2 col-md-offset-10">
+          <a class="btn btn-primary" href="@Url.Action("ProductosNoAsignadosByIdDetalle", "DetalleFactura", new { idFactura = Model.Factura.IdFactura, idDetalle = Model.IdDetalleFactura })">+ Agregar productos</a>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered table-hover ">
+                <thead>
+                    <tr>
+                        <th class="text-center">Eliminar</th>
+                        <th class="text-center">Id detalle</th>
+                        <th class="">Id producto</th>
+                        <th>Nombre</th>
+                        <th>Marca</th>
+                        <th>Costo</th>
+                        <th>Precio de venta</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ML.DetalleFactura detalleProducto in Model.Producto.Productos)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <a class="btn btn-danger glyphicon glyphicon-remove" href="@Url.Action("ProductoDeleteByIdFactura", "DetalleFactura", new { idFactura = Model.Factura.IdFactura , idDetalle = Model.IdDetalleFactura })"></a>
+                            </td>
+                            <td>@Model.IdDetalleFactura</td>
+                            <td class="">@detalleProducto.Producto.IdProducto</td>
+                            <td class="text-center">@detalleProducto.Producto.Nombre</td>
+                            <td class="text-center">@detalleProducto.Producto.Marca</td>
+                            <td class="text-center">@detalleProducto.Producto.Costo</td>
+                            <td class="text-center">@detalleProducto.Producto.PrecioVenta</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("Regresar", "GetAll", "DetalleFactura", htmlAttributes: new { @class = "btn btn-danger" })
+        </div>
+    </div>
+
+</div>
+
